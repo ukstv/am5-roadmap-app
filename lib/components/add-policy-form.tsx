@@ -1,6 +1,7 @@
 import React, { FormEvent, useState } from "react";
 import { CacaoBlock } from "ceramic-cacao";
 import { useSiwe } from "../fancy/use-siwe";
+import addAccess from "../fancy/add-access";
 import { createResource } from "../perm1";
 
 type Props = {
@@ -21,6 +22,7 @@ export function AddPolicyForm(props: Props) {
         "$.policy"
       );
       const block = await siweFn({ uri: subject, resources: [resource] });
+      await addAccess(block)
       props.onSuccess(block);
     } catch (e: any) {
       props.onError?.(e);

@@ -1,0 +1,141 @@
+type Query {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  viewer: CeramicAccount
+  accessIndex(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): AccessConnection
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+type CeramicAccount implements Node {
+  id: ID!
+  isViewer: Boolean!
+  accessList(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): AccessConnection
+}
+
+"""A connection to a list of items."""
+type AccessConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [AccessEdge]
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+"""An edge in a connection."""
+type AccessEdge {
+  """The item at the end of the edge"""
+  node: Access
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type Access implements Node {
+  id: ID!
+  descr: String
+  policy: String
+}
+
+type Mutation {
+  createAccess(input: CreateAccessInput!): CreateAccessPayload
+  updateAccess(input: UpdateAccessInput!): UpdateAccessPayload
+}
+
+type CreateAccessPayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  viewer: CeramicAccount
+  document: Access!
+  clientMutationId: String
+}
+
+input CreateAccessInput {
+  content: RequiredAccessInput!
+  clientMutationId: String
+}
+
+input RequiredAccessInput {
+  descr: String
+  policy: String
+}
+
+type UpdateAccessPayload {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  viewer: CeramicAccount
+  document: Access!
+  clientMutationId: String
+}
+
+input UpdateAccessInput {
+  id: ID!
+  content: AccessInput!
+  options: UpdateOptionsInput
+  clientMutationId: String
+}
+
+input AccessInput {
+  descr: String
+  policy: String
+}
+
+input UpdateOptionsInput {
+  replace: Boolean
+  version: CeramicCommitID
+}
+
+"""A Ceramic Commit ID"""
+scalar CeramicCommitID

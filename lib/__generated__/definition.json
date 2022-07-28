@@ -1,0 +1,1 @@
+{"models":{"Access":"kjzl6hvfrbw6c5qmkz9dhfdwwdg54t8iecxns8nnz7jrx5v2otqflpzpel6czhj"},"objects":{"Access":{"descr":{"type":"string","required":false},"policy":{"type":"string","required":false}}},"accountData":{"accessList":{"type":"connection","name":"Access"}}}

@@ -3,6 +3,12 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
+    "composite:create": "composedb composite:create data/src/sso.graphql --output data/src/sso.json",
+    "composite:compile:ts": "composedb composite:compile data/src/sso.json lib/__generated__/definition.ts",
+    "composite:compile:js": "composedb composite:compile data/src/sso.json lib/__generated__/definition.js",
+    "composite:compile:json": "composedb composite:compile data/src/sso.json lib/__generated__/definition.json",
+    "composite:graphql:schema": "composedb graphql:schema lib/__generated__/definition.json > lib/__generated__/definition.graphql",
+    "composite:models": "composedb composite:models data/src/sso.json --id-only",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
