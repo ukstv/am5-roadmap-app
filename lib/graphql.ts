@@ -16,6 +16,8 @@ import { DID } from 'dids'
 import { CeramicClient } from '@ceramicnetwork/http-client'
 import * as u8a from 'uint8arrays'
 import { relayStylePagination } from '@apollo/client/utilities'
+import { EthereumAuthProvider } from "@ceramicnetwork/blockchain-utils-linking";
+import { DIDSession } from "did-session";
 
 const SEED = '1515f3a1b8f0325274783382097cfc592dd49ded127e27a7459c1b6be1e85cf4'
 
@@ -27,7 +29,7 @@ type Clients = {
     composeClient: ComposeClient
 }
 
-export function getClients(): Clients {
+export async function getClients(): Promise<Clients> {
     if (!composeClient) {
         composeClient = new ComposeClient({
             ceramic: 'http://localhost:7007',
@@ -36,7 +38,22 @@ export function getClients(): Clients {
 
         const ceramicClientInstance = new CeramicClient('http://localhost:7007')
 
-        const provider = new Ed25519Provider(u8a.fromString(SEED, 'base16'))
+        // @ts-ignore
+        const accounts = await window.ethereum.request({
+            method: 'eth_requestAccounts',
+        })
+        const authProvider = new EthereumAuthProvider(
+          // @ts-ignore
+          window.ethereum,
+          accounts[0],
+        )
+        const session = await DIDSession.authorize(authProvider, {
+            resources: [],
+        })
+
+        // const provider = new Ed25519Provider(u8a.fromString(SEED, 'base16'))
+
+
         const keyDidResolver = KeyDidResolver.getResolver()
         const pkhDidResolver = PkhDidResolver.getResolver()
         const threeIdResolver = ThreeIdResolver.getResolver(ceramicClientInstance)
@@ -45,11 +62,11 @@ export function getClients(): Clients {
             ...pkhDidResolver,
             ...keyDidResolver,
         })
-        const did = new DID({ provider, resolver })
+        // const did = new DID({ provider: session.did, resolver })
 
-        did.authenticate()
+        // did.authenticate()
 
-        composeClient.setDID(did)
+        composeClient.setDID(session.did)
     }
 
     if (!apolloClient) {
