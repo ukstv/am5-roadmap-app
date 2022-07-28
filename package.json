@@ -1,0 +1,44 @@
+{
+  "name": "am5-front2",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.6.9",
+    "@ceramicnetwork/blockchain-utils-linking": "^2.0.7",
+    "@composedb/client": "^0.1.1",
+    "@composedb/types": "^0.1.0",
+    "@ipld/dag-cbor": "^7.0.2",
+    "@rainbow-me/rainbowkit": "^0.4.4",
+    "@wagmi/core": "^0.5.0",
+    "autoprefixer": "^10.4.7",
+    "ceramic-cacao": "^1.1.1",
+    "did-session": "^0.1.1",
+    "dids": "^3.2.0",
+    "ethers": "^5.0.0",
+    "jotai": "^1.7.6",
+    "key-did-provider-ed25519": "^2.0.1",
+    "key-did-resolver": "^2.0.5",
+    "next": "^12.1.6",
+    "postcss": "^8.4.14",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "rxjs": "^7.5.6",
+    "tailwindcss": "^3.1.6",
+    "uint8arrays": "^3.0.0",
+    "wagmi": "^0.5.3"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.35",
+    "@types/react": "^18.0.9",
+    "eslint": "^8.15.0",
+    "eslint-config-next": "^12.1.6",
+    "prettier": "^2.7.1",
+    "typescript": "^4.7.2"
+  }
+}

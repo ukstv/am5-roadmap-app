@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply text-slate-600;
+}
+
+.top-menu {
+  line-height: 3em;
+}
+
+.top-menu-menu .top-menu-menu-item {
+  @apply rounded px-4;
+}
+
+.top-menu-menu .top-menu-menu-item.active {
+  @apply decoration-sky-500 underline text-black;
+}
+
+.top-menu-menu .top-menu-menu-item:hover {
+  @apply rounded bg-sky-500 no-underline;
+  color: white;
+}
