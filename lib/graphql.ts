@@ -7,14 +7,11 @@ import {
 } from '@apollo/client'
 import { ComposeClient } from '@composedb/client'
 import { definition } from './__generated__/definition'
-import { Ed25519Provider } from 'key-did-provider-ed25519'
 import * as ThreeIdResolver from '@ceramicnetwork/3id-did-resolver'
 import * as KeyDidResolver from 'key-did-resolver'
 import * as PkhDidResolver from 'pkh-did-resolver'
 import { Resolver } from 'did-resolver'
-import { DID } from 'dids'
 import { CeramicClient } from '@ceramicnetwork/http-client'
-import * as u8a from 'uint8arrays'
 import { relayStylePagination } from '@apollo/client/utilities'
 import { EthereumAuthProvider } from "@ceramicnetwork/blockchain-utils-linking";
 import { DIDSession } from "did-session";
@@ -24,7 +21,7 @@ const SEED = '1515f3a1b8f0325274783382097cfc592dd49ded127e27a7459c1b6be1e85cf4'
 let apolloClient: ApolloClient<NormalizedCacheObject>
 let composeClient: ComposeClient
 
-type Clients = {
+export type Clients = {
     apolloClient: ApolloClient<NormalizedCacheObject>
     composeClient: ComposeClient
 }

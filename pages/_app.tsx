@@ -3,13 +3,9 @@ import "@rainbow-me/rainbowkit/styles.css";
 import type { AppProps } from "next/app";
 import { RainbowKitProvider, getDefaultWallets } from "@rainbow-me/rainbowkit";
 import { chain, configureChains, createClient, WagmiConfig, useSignMessage,  } from "wagmi";
-import { signMessage } from '@wagmi/core'
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import { Provider } from "jotai";
-import { ApolloProvider } from "@apollo/client";
-
-import { client } from "../lib/graphql";
 
 const { chains, provider, webSocketProvider } = configureChains(
   [
@@ -48,9 +44,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
         <Provider>
-          <ApolloProvider client={client}>
             <Component {...pageProps} />
-          </ApolloProvider>
         </Provider>
       </RainbowKitProvider>
     </WagmiConfig>
