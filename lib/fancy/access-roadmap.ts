@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client'
-import { client } from '../../lib/graphql';
+import { getClients } from '../../lib/graphql';
 
 const ROADMAP_AUTH_QUERY = gql`
     query {
@@ -14,7 +14,8 @@ const ROADMAP_AUTH_QUERY = gql`
 `
 
 export default async function accessRoadmap(req: any, res: any) {
-    const authResults = await client.query({
+    const {apolloClient} = await getClients()
+    const authResults = await apolloClient.query({
         query: ROADMAP_AUTH_QUERY,
         fetchPolicy: 'network-only'
     })
