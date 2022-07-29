@@ -12,6 +12,15 @@ type Props = {
 export function AddPolicyForm(props: Props) {
   const siweFn = useSiwe();
   const [subject, setSubject] = useState("");
+  const [streamId, setStreamId] = useState("");
+
+  const renderStreamId = () => {
+    if (streamId) {
+      return <p>{streamId}</p>;
+    } else {
+      return <></>;
+    }
+  };
 
   const handleAddPolicy = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,6 +34,7 @@ export function AddPolicyForm(props: Props) {
         );
         return siweFn({ uri: subject, resources: [resource] });
       });
+      setStreamId(streamId.toString());
       props.onSuccess(streamId);
     } catch (e: any) {
       props.onError?.(e);
@@ -51,6 +61,7 @@ export function AddPolicyForm(props: Props) {
           </button>
         </div>
       </form>
+      {renderStreamId()}
     </div>
   );
 }
