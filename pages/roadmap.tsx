@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import { Container } from "../lib/components/container";
 import { useEffect, useState } from "react";
+import accessRoadmap from "../lib/fancy/access-roadmap"
 
 const RoadmapPage: NextPage = () => {
   const [data, setData] = useState([]);
@@ -12,8 +13,7 @@ const RoadmapPage: NextPage = () => {
 
   let loadRoadmap = async () => {
     setLoading(true)
-    const res = await fetch("/api/roadmap")
-    setData(await res.json());
+    await accessRoadmap()
     setLoading(false);
   };
 

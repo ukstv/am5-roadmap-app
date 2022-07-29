@@ -13,7 +13,7 @@ const ROADMAP_AUTH_QUERY = gql`
     }
 `
 
-export default async function accessRoadmap(req: any, res: any) {
+export default async function accessRoadmap() {
     const {apolloClient} = await getClients()
     const authResults = await apolloClient.query({
         query: ROADMAP_AUTH_QUERY,
@@ -21,6 +21,5 @@ export default async function accessRoadmap(req: any, res: any) {
     })
     const authEntries = authResults.data.accountIndex?.edges || {}
     console.log("authEntries:", authEntries)
-    // Verify policy and return accessRoadmap
-    return res.status(200).json();
+    // Verify policy and return roadmap
 }

@@ -45,7 +45,7 @@ export async function getClients(): Promise<Clients> {
           accounts[0],
         )
         const session = await DIDSession.authorize(authProvider, {
-            resources: [],
+            resources: ["http://iam.example.com", "ceramic://*"]
         })
 
         // const provider = new Ed25519Provider(u8a.fromString(SEED, 'base16'))

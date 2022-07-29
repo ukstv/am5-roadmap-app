@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client'
-import { client } from '../../lib/graphql';
+import { getClients } from '../../lib/graphql';
 import {CacaoBlock} from "ceramic-cacao";
 import * as uint8arrays from "uint8arrays";
 
@@ -17,8 +17,9 @@ const CREATE_ACCESS_MUTATION = gql`
 
 export default async function addAccess(policy: CacaoBlock) {
     console.log("in addAccess")
+    const {apolloClient} = await getClients()
     try {
-        const result = await client.mutate({
+        const result = await apolloClient.mutate({
             mutation: CREATE_ACCESS_MUTATION,
             variables: {
                 input: {
