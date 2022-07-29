@@ -38,8 +38,8 @@ export function Container(props: React.PropsWithChildren<{}>) {
             <div className={"flex top-menu-menu"}>
               <div className={"font-bold italic"}>IAM</div>
               <div className={"flex ml-4"}>
-                <ActiveLink href={"/favourites"}>Favourites</ActiveLink>
-                <ActiveLink href={"/users"}>Users</ActiveLink>
+                {/*<ActiveLink href={"/favourites"}>Favourites</ActiveLink>*/}
+                {/*<ActiveLink href={"/users"}>Users</ActiveLink>*/}
                 <ActiveLink href={"/policies"}>Policies</ActiveLink>
                 <ActiveLink href={"/roadmap"}>Roadmap</ActiveLink>
               </div>
