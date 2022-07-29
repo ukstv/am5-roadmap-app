@@ -19,42 +19,49 @@ const CREATE_ACCESS_MUTATION = gql`
 const UPDATE_ACCESS_MUTATION = gql`
   mutation UpdateAccess($input: UpdateAccessInput!) {
     updateAccess(input: $input) {
-      id
-      descr
-      policy
+      document {
+        id
+        descr
+        policy
+      }
     }
   }
-`
+`;
 
 export default async function addAccess(
   buildBlock: (streamId: string) => Promise<CacaoBlock>
 ): Promise<StreamID> {
-  const { apolloClient } = await getClients();
-  const result0 = await apolloClient.mutate({
-    mutation: CREATE_ACCESS_MUTATION,
-    variables: {
-      input: {
-        content: {
-          descr: "new access policy",
+  try {
+    const { apolloClient } = await getClients();
+    const result0 = await apolloClient.mutate({
+      mutation: CREATE_ACCESS_MUTATION,
+      variables: {
+        input: {
+          content: {
+            descr: "new access policy",
+          },
         },
       },
-    },
-  });
-  const streamId = result0.data.createAccess.document.id;
-  console.log('r.0', streamId)
-  const block = await buildBlock(streamId);
-  const result1 = await apolloClient.mutate({
-    mutation: UPDATE_ACCESS_MUTATION,
-    variables: {
-      input: {
-        id: streamId,
-        content: {
-          descr: "new access policy",
-          policy: uint8arrays.toString(block.bytes, "base64url"),
+    });
+    const streamId = result0.data.createAccess.document.id;
+    console.log("r.0", streamId);
+    const block = await buildBlock(streamId);
+    const result1 = await apolloClient.mutate({
+      mutation: UPDATE_ACCESS_MUTATION,
+      variables: {
+        input: {
+          id: streamId,
+          content: {
+            descr: "new access policy",
+            policy: uint8arrays.toString(block.bytes, "base64url"),
+          },
         },
       },
-    },
-  });
-  console.log('r.1', result1)
-  return StreamID.fromString(result1.data.createAccess.document.id);
+    });
+    console.log("r.1", result1);
+    return StreamID.fromString(result1.data.updateAccess.document.id);
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
 }
