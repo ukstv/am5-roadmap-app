@@ -3,9 +3,10 @@ import { CacaoBlock } from "ceramic-cacao";
 import { useSiwe } from "../fancy/use-siwe";
 import addAccess from "../fancy/add-access";
 import { createResource } from "../perm1";
+import { StreamID } from "@ceramicnetwork/streamid";
 
 type Props = {
-  onSuccess: (block: CacaoBlock) => void;
+  onSuccess: (streamId: StreamID) => void;
   onError?: (error: Error) => void;
 };
 export function AddPolicyForm(props: Props) {
@@ -15,15 +16,16 @@ export function AddPolicyForm(props: Props) {
   const handleAddPolicy = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const resource = createResource(
-        "http://roadmap.ceramic.network",
-        "read",
-        "ceramic://kjz",
-        "$.policy"
-      );
-      const block = await siweFn({ uri: subject, resources: [resource] });
-      await addAccess(block)
-      props.onSuccess(block);
+      const streamId = await addAccess(async (streamId) => {
+        const resource = createResource(
+          "http://roadmap.ceramic.network",
+          "read",
+          `ceramic://${streamId}`,
+          "$.policy"
+        );
+        return siweFn({ uri: subject, resources: [resource] });
+      });
+      props.onSuccess(streamId);
     } catch (e: any) {
       props.onError?.(e);
     }
