@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import accessRoadmap from "../lib/fancy/access-roadmap";
 import { useRouter } from "next/router";
 import { useAccount } from "../lib/fancy/use-account";
+import Image from "next/image"
 
 const RoadmapPage: NextPage = () => {
   const account = useAccount();
@@ -29,7 +30,10 @@ const RoadmapPage: NextPage = () => {
   };
 
   if (permitted) {
-    return <Container>Roadmap</Container>;
+    return <Container>Roadmap
+      <Image src="/assets/p1.png"></Image>
+      <Image src="/assets/p2.png"></Image>
+    </Container>;
   } else {
     return <Container>Not allowed to see the roadmap</Container>;
   }
