@@ -31,11 +31,11 @@ const RoadmapPage: NextPage = () => {
 
   if (permitted) {
     return <Container>
-      <Image width={"1128"} height={"951"} src="/p1.png"></Image>
-      <Image width={"1120"} height={"985"} src="/p2.png"></Image>
+      <Image width={"1128"} height={"951"} src="/broccoli.jpg"></Image>
+      {/*<Image width={"1120"} height={"985"} src="/p2.png"></Image>*/}
     </Container>;
   } else {
-    return <Container>Not allowed to see the roadmap</Container>;
+    return <Container>Not allowed to see the secret of success</Container>;
   }
 };
 

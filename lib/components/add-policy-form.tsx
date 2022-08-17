@@ -18,7 +18,7 @@ export function AddPolicyForm(props: Props) {
     if (streamId) {
       return (
         <p>
-          <a className={"underline decoration-1"} href={`/roadmap?s=${streamId}`}>{streamId}</a>
+          <a className={"underline decoration-1"} href={`/secret?s=${streamId}`}>{streamId}</a>
         </p>
       );
     } else {
