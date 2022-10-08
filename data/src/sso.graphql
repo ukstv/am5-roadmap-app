@@ -1,0 +1,33 @@
+# 1ACCOUNT - Ehereum Wallet enabled Single Sign On (SSO)
+# ROOT CONTROLLER -> App/Group/DAO/dApp - managing entity
+
+# USER SPECIFIC
+# user entrypoint: created via e.g. Metamask login flow
+#type Account @model(accountRelation: SINGLE, description:"Discover (Intermediary) Account created as part of Ethereum SSO flow") {
+#    descr: String @length(max: 150)
+#    # associate external e.g. Profile model with Account to avoid data replication
+#    profile: String @length(max: 1024)
+#    # this cannot be trusted; always have to be verified ??? group entry is a signed entry in the user stream via cacao
+#    access: [String] @length(max:1024) @arrayLength(max: 100)
+#}
+
+# ORG SPECIFIC
+# recursive structure to allow group of users or groups
+type Access @model(accountRelation: LIST, description:"intermediary that associates account access with User Account") {
+    # org name, addt. information
+    descr: String @length(max: 150)
+    # if null then no access / user disabled
+    policy: String @length(max:1024)
+}
+
+# capability relation 1-1 between AccountAccess & Policy - capability MUST BE IMMUTABLE
+#type Policy @model(accountRelation: LIST, description:"Capabilities associated with AccountAccess") {
+#    descr: String! @length(max: 150)
+#    is_active: Boolean
+#    # e.g. "Allow" or "Deny"
+#    effect: String @length(max: 50)
+#    # ROADMAP, GITHUB, DISCORD etc. -> this has to be synced with cacao
+#    scope: String! @length(max: 50)
+#    # r, rw, rwd
+#    access: String! @length(max: 10)
+#}

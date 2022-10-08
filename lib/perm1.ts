@@ -18,7 +18,7 @@ export function createResource(
   return `ipld+perm1://${blob}`;
 }
 
-export function parseResource(input: string) {
+export function parseResource(input: string): any {
   const s = input.replace(`ipfs+perm1://`, "");
   const blob = uint8arrays.fromString(s, "base64url");
   const payload = dagCbor.decode(blob);

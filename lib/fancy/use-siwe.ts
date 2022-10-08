@@ -6,6 +6,7 @@ import { CacaoBlock, SiweMessage } from "ceramic-cacao";
 export type SiweFn = (input: Partial<SiweMessage>) => Promise<CacaoBlock>;
 
 export function useSiwe(): SiweFn {
+  console.log("inside useSiwe")
   const account = useAccount();
   const s = useSigner();
 

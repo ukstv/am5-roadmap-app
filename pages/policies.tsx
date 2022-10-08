@@ -1,18 +1,17 @@
 import { NextPage } from "next";
 import { Container } from "../lib/components/container";
-import * as uint8arrays from "uint8arrays";
 import { AddPolicyForm } from "../lib/components/add-policy-form";
-import { CacaoBlock } from "ceramic-cacao";
+import { StreamID } from "@ceramicnetwork/streamid";
+import { useState } from "react";
 
 const PoliciesPage: NextPage = () => {
-  const handleBlock = (block: CacaoBlock) => {
-    console.log("block", block);
-    console.log("base64", uint8arrays.toString(block.bytes, "base64"));
+  const handleStreamId = (streamId: StreamID) => {
+    console.log('streamId', streamId)
   };
 
   return (
     <Container>
-      <AddPolicyForm onSuccess={handleBlock} />
+      <AddPolicyForm onSuccess={handleStreamId} />
     </Container>
   );
 };

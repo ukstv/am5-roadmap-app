@@ -1,27 +1,45 @@
 import React, { FormEvent, useState } from "react";
 import { CacaoBlock } from "ceramic-cacao";
 import { useSiwe } from "../fancy/use-siwe";
+import addAccess from "../fancy/add-access";
 import { createResource } from "../perm1";
+import { StreamID } from "@ceramicnetwork/streamid";
 
 type Props = {
-  onSuccess: (block: CacaoBlock) => void;
+  onSuccess: (streamId: StreamID) => void;
   onError?: (error: Error) => void;
 };
 export function AddPolicyForm(props: Props) {
   const siweFn = useSiwe();
   const [subject, setSubject] = useState("");
+  const [streamId, setStreamId] = useState("");
+
+  const renderStreamId = () => {
+    if (streamId) {
+      return (
+        <p>
+          <a className={"underline decoration-1"} href={`/secret?s=${streamId}`}>{streamId}</a>
+        </p>
+      );
+    } else {
+      return <></>;
+    }
+  };
 
   const handleAddPolicy = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const resource = createResource(
-        "http://roadmap.ceramic.network",
-        "read",
-        "ceramic://kjz",
-        "$.policy"
-      );
-      const block = await siweFn({ uri: subject, resources: [resource] });
-      props.onSuccess(block);
+      const streamId = await addAccess(async (streamId) => {
+        const resource = createResource(
+          "http://roadmap.ceramic.network",
+          "read",
+          `ceramic://${streamId}`,
+          "$.policy"
+        );
+        return siweFn({ uri: subject, resources: [resource] });
+      });
+      setStreamId(streamId.toString());
+      props.onSuccess(streamId);
     } catch (e: any) {
       props.onError?.(e);
     }
@@ -47,6 +65,7 @@ export function AddPolicyForm(props: Props) {
           </button>
         </div>
       </form>
+      {renderStreamId()}
     </div>
   );
 }
